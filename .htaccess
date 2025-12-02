@@ -1,0 +1,22 @@
+# /coffees/.htaccess
+Options -MultiViews
+
+RewriteEngine On
+
+# อนุญาตไฟล์/โฟลเดอร์ที่มีอยู่จริงให้ผ่านไปก่อน (กันลูป/กันทับไฟล์จริง)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# กรณีเรียก /coffees/ หรือ /coffees (รากของโฟลเดอร์นี้)
+RewriteRule ^$ index.php [L,QSA]
+
+# ตัด prefix ภาษาและชี้ไปไฟล์จริงในโฟลเดอร์นี้
+# 1) /coffees/(th|en|lo|km)/ หรือ /coffees/(th|en|lo|km)/index.php → index.php
+RewriteRule ^(th|en|lo|km)/(?:index\.php)?$ index.php [L,QSA]
+
+# 2) /coffees/(th|en|lo|km)/productdetails.php?id=*** → productdetails.php?id=***
+RewriteRule ^(th|en|lo|km)/productdetails\.php$ productdetails.php [L,QSA]
+
+# 2) /coffees/(th|en|lo|km)/productdetails.php?id=*** → productdetails.php?id=***
+RewriteRule ^(th|en|lo|km)/productdetailss\.php$ productdetailss.php [L,QSA]
